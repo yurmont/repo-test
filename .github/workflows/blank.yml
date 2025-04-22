@@ -1,0 +1,63 @@
+name: Dev & Stg Deployments with Approval
+
+on:
+  workflow_dispatch:
+
+jobs:
+  # ─── DEV ───────────────────────────
+  approval-dev:
+    name: "Approval: DEV"
+    runs-on: ubuntu-latest
+    environment: dev-environment
+    steps:
+      - run: echo "Manual approval for DEV granted."
+
+  build-dev:
+    name: "Build DEV"
+    needs: approval-dev
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🏗️ Building for DEV..."
+
+  test-dev:
+    name: "Test DEV"
+    needs: approval-dev
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "✅ Running tests for DEV..."
+
+  deploy-dev:
+    name: "Deploy DEV"
+    needs: [build-dev, test-dev]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🚀 Deploying to DEV..."
+
+  # ─── STG ───────────────────────────
+  approval-stg:
+    name: "Approval: STG"
+    runs-on: ubuntu-latest
+    environment: stg-environment
+    steps:
+      - run: echo "Manual approval for STG granted."
+
+  build-stg:
+    name: "Build STG"
+    needs: approval-stg
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🏗️ Building for STG..."
+
+  test-stg:
+    name: "Test STG"
+    needs: approval-stg
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "✅ Running tests for STG..."
+
+  deploy-stg:
+    name: "Deploy STG"
+    needs: [build-stg, test-stg]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🚀 Deploying to STG..."
