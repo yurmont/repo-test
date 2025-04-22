@@ -16,6 +16,7 @@ jobs:
     name: "Build DEV"
     needs: approval-dev
     runs-on: ubuntu-latest
+    environment: dev-environment
     steps:
       - run: echo "🏗️ Building for DEV..."
 
@@ -23,6 +24,7 @@ jobs:
     name: "Test DEV"
     needs: approval-dev
     runs-on: ubuntu-latest
+    environment: dev-environment
     steps:
       - run: echo "✅ Running tests for DEV..."
 
@@ -30,6 +32,7 @@ jobs:
     name: "Deploy DEV"
     needs: [build-dev, test-dev]
     runs-on: ubuntu-latest
+    environment: dev-environment
     steps:
       - run: echo "🚀 Deploying to DEV..."
 
